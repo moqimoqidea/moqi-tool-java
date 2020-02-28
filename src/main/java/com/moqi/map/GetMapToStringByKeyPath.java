@@ -11,7 +11,8 @@ import java.util.regex.Pattern;
 /**
  * 获取 Map.toString() 固定格式中不固定 KeyPath 对应的值
  * 目前暂不考虑数组
- * 【已解决，子{}串置空】目前的 bug 在于内外层都有某个 KV 对，当 KeyPath 为短路径时，则无法判断 V 的正确性。
+ * 【无法解决：贪婪匹配和非贪婪匹配都无法解决子串括号对称问题】目前的 bug 在于内外层都有某个 KV 对，当 KeyPath 为短路径时，则无法判断 V 的正确性。
+ *
  *
  * @author moqi
  * On 2/25/20 19:20
@@ -22,7 +23,7 @@ public class GetMapToStringByKeyPath {
 
     private static final String EMPTY = "";
     private static final String KEY_REGEX_SUFFIX = "(.*?,|.*?$)";
-    private static final String SUB_REGEX_SUFFIX = "\\{.*?}";
+    private static final String SUB_REGEX_SUFFIX = "\\{.*}";
     private static final Pattern SUB_REGEX_SUFFIX_COMPILE = Pattern.compile(SUB_REGEX_SUFFIX);
 
     /**
@@ -36,8 +37,8 @@ public class GetMapToStringByKeyPath {
      * 2020-02-26 10:46:32 INFO  GetMapToStringByKeyPath:28 - value:yiqing_shangha
      */
     public static void main(String[] args) {
-        String sourceString = "{other={newsid=imxxstf3273293-comos-finance-cms, expid=15825122309522sinawap5e533866e8784800793870, pageCategory=yiqing, channel=yiqing_shanghai}, channel=test_value, name=CL_R_1, seId=049c2fce06}";
-        String path = "channel";
+        String sourceString = "{c=d, m={a1=b1, c1=d1, m1={aaa=bbb}, e=w}, a=b, zzz={zzz1=zzz2}, a2=b2}";
+        String path = "a";
 
         String value = getValueByPath(sourceString, path);
         log.info("value:{}", value);
@@ -76,7 +77,7 @@ public class GetMapToStringByKeyPath {
             String matchValue = matcher.group();
             log.info("matchValue:{}", matchValue);
 
-            String nextSourceString = matchValue.substring(prefix.length() + 2, matchValue.length() - 1);
+            String nextSourceString = matchValue.substring(prefix.length() + 1);
             log.info("nextSourceString:{}", nextSourceString);
             return getValueByPath(nextSourceString, suffix);
         }
