@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 class PersonTest {
 
     /**
-     * 1.2.66 版本的 fastjson 解析异常
+     * 1.2.67 版本的 fastjson 解析异常
      */
     @Test
     public void parse() {
