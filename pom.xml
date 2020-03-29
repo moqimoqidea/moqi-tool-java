@@ -21,6 +21,12 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
+
+        <!-- for json schema -->
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
     </repositories>
 
     <properties>
@@ -136,8 +142,14 @@
             <version>${guava.version}</version>
         </dependency>
         <!-- common tool library end -->
-    </dependencies>
 
+        <!-- 测试 JSON Scheme 框架的校验功能 -->
+        <dependency>
+            <groupId>com.github.everit-org.json-schema</groupId>
+            <artifactId>org.everit.json.schema</artifactId>
+            <version>1.12.1</version>
+        </dependency>
+    </dependencies>
     <build>
         <plugins>
             <!-- maven plugins start -->
