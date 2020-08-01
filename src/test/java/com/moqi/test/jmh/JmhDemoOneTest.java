@@ -1,4 +1,4 @@
-package com.moqi.test;
+package com.moqi.test.jmh;
 
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
@@ -50,7 +50,7 @@ public class JmhDemoOneTest {
 # Timeout: 10 min per iteration
 # Threads: 1 thread, will synchronize iterations
 # Benchmark mode: Average time, time/op
-# Benchmark: com.moqi.test.JmhDemoOneTest.sayHello
+# Benchmark: com.moqi.test.jmh.JmhDemoOneTest.sayHello
 
 # Run progress: 0.00% complete, ETA 00:08:20
 # Fork: 1 of 5
@@ -118,7 +118,7 @@ Iteration   4: 11.412 ms/op
 Iteration   5: 11.516 ms/op
 
 
-Result "com.moqi.test.JmhDemoOneTest.sayHello":
+Result "com.moqi.test.jmh.JmhDemoOneTest.sayHello":
   11.441 ±(99.9%) 0.092 ms/op [Average]
   (min, avg, max) = (11.208, 11.441, 11.651), stdev = 0.123
   CI (99.9%): [11.349, 11.533] (assumes normal distribution)
