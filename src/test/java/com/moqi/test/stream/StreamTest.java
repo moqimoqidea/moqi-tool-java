@@ -5,6 +5,12 @@ import java.util.List;
 import java.util.Random;
 
 /**
+ * Java 命令式方法和函数式方法在面对同一个问题的不同方案。
+ *
+ * 给定一个巨大的 Integer 的 List，计算其中大于数字 N 的 数量 M。
+ * 可以看到 Stream 方式很容易并行，而普通方法可能需要借助线程模型来提高计算速度。
+ * 广而化之这个问题，如果计算过程更复杂，意味着 Stream 的方式收益更高。
+ *
  * @author moqi
  * On 8/13/20 17:22
  */
