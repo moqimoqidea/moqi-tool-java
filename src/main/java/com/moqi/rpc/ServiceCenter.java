@@ -24,7 +24,7 @@ public class ServiceCenter implements Server {
     private static int port;
 
     public ServiceCenter(int port) {
-        this.port = port;
+        ServiceCenter.port = port;
     }
 
     public void stop() {

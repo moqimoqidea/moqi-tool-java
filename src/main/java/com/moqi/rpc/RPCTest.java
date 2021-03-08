@@ -11,16 +11,13 @@ import java.net.InetSocketAddress;
 public class RPCTest {
 
     public static void main(String[] args) throws IOException {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Server serviceServer = new ServiceCenter(8088);
-                    serviceServer.register(HelloService.class, HelloServiceImpl.class);
-                    serviceServer.start();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        new Thread(() -> {
+            try {
+                Server serviceServer = new ServiceCenter(8088);
+                serviceServer.register(HelloService.class, HelloServiceImpl.class);
+                serviceServer.start();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }).start();
 
