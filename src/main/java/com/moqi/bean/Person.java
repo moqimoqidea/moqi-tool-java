@@ -1,10 +1,18 @@
 package com.moqi.bean;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 /**
  * @author moqi
  * On 3/4/20 10:49
  */
-
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Person {
 
     private String name;
@@ -12,45 +20,4 @@ public class Person {
     private String id;
     private int age;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    @Override
-    public String toString() {
-        return "Person{" +
-                "name='" + name + '\'' +
-                ", address='" + address + '\'' +
-                ", id='" + id + '\'' +
-                ", age=" + age +
-                '}';
-    }
 }
