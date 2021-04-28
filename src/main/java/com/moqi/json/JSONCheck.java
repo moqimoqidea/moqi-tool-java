@@ -21,11 +21,17 @@ public class JSONCheck {
         boolean validJSON1 = isValidJSON("");
         System.out.println("validJSON1 = " + validJSON1);
 
+        boolean validJSON2 = isValidJSON(null);
+        System.out.println("validJSON2 = " + validJSON2);
+
         boolean validJSONArray = isValidJSONArray("");
         System.out.println("validJSONArray = " + validJSONArray);
 
         boolean validJSONArray1 = isValidJSONArray("[]");
         System.out.println("validJSONArray1 = " + validJSONArray1);
+
+        boolean validJSONArray2 = isValidJSONArray(null);
+        System.out.println("validJSONArray2 = " + validJSONArray2);
 
     }
 
