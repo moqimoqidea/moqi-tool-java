@@ -17,6 +17,17 @@ public class GuavaCollectionTest {
         Set<String> emptySet = Sets.newHashSet();
         String join = Joiner.on(",").join(emptySet);
         System.out.println("join = " + join);
+
+        // NPE
+        /*HashSet<String> set3 = new HashSet<>(Splitter.on(",")
+                .trimResults()
+                .splitToList(null));
+        System.out.println("set3 = " + set3);*/
+
+        // NPE
+        /*Set<String> set4 = null;
+        String join1 = Joiner.on(",").join(set4);
+        System.out.println("join1 = " + join1);*/
     }
 
 }
