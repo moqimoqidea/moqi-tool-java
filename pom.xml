@@ -39,23 +39,24 @@
         <junit-jupiter.version>5.5.1</junit-jupiter.version>
         <groovy-all.version>2.5.7</groovy-all.version>
         <cglib-nodep.version>3.3.0</cglib-nodep.version>
-        <objenesis.version>3.0.1</objenesis.version>
+        <objenesis.version>3.2</objenesis.version>
         <byte-buddy.version>1.10.1</byte-buddy.version>
         <gmavenplus-plugin.version>1.7.1</gmavenplus-plugin.version>
         <surefire-junit47.version>3.0.0-M3</surefire-junit47.version>
 
         <!-- common tool library -->
         <slf4j.version>1.7.29</slf4j.version>
-        <lombok.version>1.18.10</lombok.version>
-        <apache.common.lang3.version>3.9</apache.common.lang3.version>
-        <fastjson.version>1.2.67</fastjson.version>
+        <lombok.version>1.18.20</lombok.version>
+        <apache.common.lang3.version>3.12.0</apache.common.lang3.version>
+        <fastjson.version>1.2.76</fastjson.version>
         <guava.version>30.1.1-jre</guava.version>
-        <jmh.version>1.23</jmh.version>
-        <gson.version>2.8.6</gson.version>
-        <jackson.version>2.11.1</jackson.version>
+        <jmh.version>1.31</jmh.version>
+        <gson.version>2.8.7</gson.version>
+        <jackson.version>2.11.3</jackson.version>
 
         <!-- practice -->
-        <mybatis.version>3.5.6</mybatis.version>
+        <mybatis.version>3.5.7</mybatis.version>
+        <commons-beanutils.version>1.9.4</commons-beanutils.version>
 
         <!-- maven plugins -->
         <maven.compiler.plugin.java.version>1.8</maven.compiler.plugin.java.version>
@@ -201,6 +202,12 @@
             <version>${mybatis.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>${commons-beanutils.version}</version>
+
+        </dependency>
     </dependencies>
     <build>
         <plugins>
