@@ -1,5 +1,6 @@
 package com.moqi.in20200530.beanutil;
 
+import com.google.common.collect.ImmutableMap;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,6 +31,8 @@ public class Employee implements Serializable {
     private List<Employee> subordinate;
 
     private Map<String, Address> address;
+
+    private int age;
 
     @Data
     @Builder

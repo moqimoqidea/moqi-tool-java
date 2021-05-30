@@ -1,7 +1,8 @@
 package com.moqi.in20200530.beanutil
 
-
+import com.google.common.collect.ImmutableMap
 import com.google.common.collect.Lists
+import org.apache.commons.beanutils.BeanUtils
 import org.apache.commons.beanutils.PropertyUtils
 import spock.lang.Specification
 
@@ -121,6 +122,42 @@ class EmployeeTest extends Specification {
         then:
         homeName == "New York"
         employee.getAddress().get("home").name == "Los Angeles"
+    }
+
+    def "property utils data type conversions should throw exception"() {
+        given:
+        def employee = Employee.builder().build()
+
+        when:
+        PropertyUtils.setProperty(employee, "firstName", 123)
+
+        then:
+        thrown(IllegalArgumentException)
+    }
+
+    def "bean utils data type conversions should work"() {
+        given:
+        def employee = Employee.builder().build()
+
+        when:
+        BeanUtils.setProperty(employee, "firstName", 123)
+        BeanUtils.setProperty(employee, "age", "18")
+
+        then:
+        employee.firstName == "123"
+        employee.age == 18
+    }
+
+    def "bean utils data type conversions populate should work"() {
+        given:
+        def employee = Employee.builder().build()
+
+        when:
+        BeanUtils.populate(employee, ImmutableMap.of("firstName", 123, "age", "18"))
+
+        then:
+        employee.firstName == "123"
+        employee.age == 18
     }
 
 }
