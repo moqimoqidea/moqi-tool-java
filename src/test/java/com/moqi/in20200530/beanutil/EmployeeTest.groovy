@@ -3,8 +3,14 @@ package com.moqi.in20200530.beanutil
 import com.google.common.collect.ImmutableMap
 import com.google.common.collect.Lists
 import org.apache.commons.beanutils.BeanUtils
+import org.apache.commons.beanutils.ConvertUtils
 import org.apache.commons.beanutils.PropertyUtils
+import org.apache.commons.beanutils.converters.DateConverter
 import spock.lang.Specification
+import spock.lang.Unroll
+
+import java.text.DateFormat
+import java.text.SimpleDateFormat
 
 /**
  * 测试 BeanUtils 功能
@@ -158,6 +164,67 @@ class EmployeeTest extends Specification {
         then:
         employee.firstName == "123"
         employee.age == 18
+    }
+
+    def "bean utils data type conversions user define converter should work"() {
+        given:
+        def employee = Employee.builder().build()
+        ThreadLocal<DateFormat> DATE_YEAR_MONTH_DAY_FORMATTER = ThreadLocal
+                .withInitial({ -> new SimpleDateFormat("yyyyMMdd") })
+
+        when:
+        DateConverter converter = new DateConverter(null)
+        converter.setPattern("yyyyMMdd")
+        ConvertUtils.register(converter, Date.class)
+        BeanUtils.setProperty(employee, "date", "20140407")
+
+        then:
+        employee.date == DATE_YEAR_MONTH_DAY_FORMATTER.get().parse("20140407")
+    }
+
+    def "bean utils copy properties type mismatch should throw exception"() {
+        given:
+        def employee = Employee.builder()
+                .firstName("firstName")
+                .lastName("lastName")
+                .age(10)
+                .date(new Date())
+                .build()
+
+        when:
+        def copyEmployee = CopyEmployee.builder().build()
+        BeanUtils.copyProperties(copyEmployee, employee)
+
+        then:
+        thrown(IllegalArgumentException)
+    }
+
+    @Unroll
+    def "copy properties after register employeeAge #employeeAge then ageEnumValue #ageEnumValue"() {
+        given:
+        def employee = Employee.builder()
+                .firstName("firstName")
+                .lastName("lastName")
+                .age(employeeAge)
+                .date(new Date())
+                .build()
+
+        when:
+        ConvertUtils.register(new AgeEnumConverter(), AgeEnum.class)
+        def copyEmployee = CopyEmployee.builder().build()
+        BeanUtils.copyProperties(copyEmployee, employee)
+
+        then:
+        copyEmployee.age == ageEnumValue
+
+        where:
+        employeeAge | ageEnumValue
+        null        | null
+        33          | null
+        0           | AgeEnum.ZERO
+        10          | AgeEnum.TEN
+        18          | AgeEnum.EIGHTEEN
+        20          | AgeEnum.TWENTY
     }
 
 }
