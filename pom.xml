@@ -57,6 +57,7 @@
         <!-- practice -->
         <mybatis.version>3.5.7</mybatis.version>
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
+        <mapstruct.version>1.4.2.Final</mapstruct.version>
 
         <!-- maven plugins -->
         <maven.compiler.plugin.java.version>1.8</maven.compiler.plugin.java.version>
@@ -206,9 +207,17 @@
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
             <version>${commons-beanutils.version}</version>
-
         </dependency>
+
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>${mapstruct.version}</version>
+        </dependency>
+
     </dependencies>
+
+
     <build>
         <plugins>
             <!-- maven plugins start -->
@@ -219,6 +228,13 @@
                 <configuration>
                     <source>${maven.compiler.plugin.java.version}</source>
                     <target>${maven.compiler.plugin.java.version}</target>
+                    <annotationProcessorPaths>
+                    <path>
+                        <groupId>org.mapstruct</groupId>
+                        <artifactId>mapstruct-processor</artifactId>
+                        <version>${mapstruct.version}</version>
+                    </path>
+                </annotationProcessorPaths>
                 </configuration>
             </plugin>
 
@@ -280,6 +296,5 @@
             <!-- spock testing framework build end -->
         </plugins>
     </build>
-
 
 </project>
