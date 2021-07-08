@@ -15,13 +15,13 @@
 
         <!-- spock testing framework -->
         <spock.scope>test</spock.scope>
-        <spock-core.version>1.3-groovy-2.5</spock-core.version>
-        <junit-jupiter.version>5.5.1</junit-jupiter.version>
-        <groovy-all.version>2.5.7</groovy-all.version>
+        <spock-core.version>2.0-groovy-3.0</spock-core.version>
+        <junit-jupiter.version>5.7.2</junit-jupiter.version>
+        <groovy-all.version>3.0.8</groovy-all.version>
         <cglib-nodep.version>3.3.0</cglib-nodep.version>
         <objenesis.version>3.2</objenesis.version>
-        <byte-buddy.version>1.10.1</byte-buddy.version>
-        <gmavenplus-plugin.version>1.7.1</gmavenplus-plugin.version>
+        <byte-buddy.version>1.11.6</byte-buddy.version>
+        <gmavenplus-plugin.version>1.21.1</gmavenplus-plugin.version>
         <surefire-junit47.version>3.0.0-M3</surefire-junit47.version>
 
         <!-- common tool library -->
@@ -30,9 +30,9 @@
         <apache.common.lang3.version>3.12.0</apache.common.lang3.version>
         <fastjson.version>1.2.76</fastjson.version>
         <guava.version>30.1.1-jre</guava.version>
-        <jmh.version>1.31</jmh.version>
+        <jmh.version>1.32</jmh.version>
         <gson.version>2.8.7</gson.version>
-        <jackson.version>2.11.3</jackson.version>
+        <jackson.version>2.11.4</jackson.version>
 
         <!-- practice -->
         <mybatis.version>3.5.7</mybatis.version>
@@ -43,23 +43,36 @@
         <maven.compiler.plugin.java.version>1.8</maven.compiler.plugin.java.version>
         <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
         <maven-assembly-plugin.version>3.0.0</maven-assembly-plugin.version>
-        <maven-surefire-plugin.version>3.0.0-M3</maven-surefire-plugin.version>
+        <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
     </properties>
 
+    <dependencyManagement>
+        <!--
+            spock 测试框架以这里为准
+            https://github.com/spockframework/spock-example/blob/master/pom.xml
+        -->
+        <dependencies>
+            <dependency>
+                <groupId>org.spockframework</groupId>
+                <artifactId>spock-bom</artifactId>
+                <version>${spock-core.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <!-- spock testing framework start -->
         <dependency>
             <groupId>org.spockframework</groupId>
             <artifactId>spock-core</artifactId>
-            <version>${spock-core.version}</version>
             <scope>${spock.scope}</scope>
         </dependency>
 
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>${junit-jupiter.version}</version>
+            <groupId>org.spockframework</groupId>
+            <artifactId>spock-junit4</artifactId>
             <scope>${spock.scope}</scope>
         </dependency>
 
@@ -67,8 +80,6 @@
             <groupId>org.codehaus.groovy</groupId>
             <artifactId>groovy-all</artifactId>
             <version>${groovy-all.version}</version>
-            <type>pom</type>
-            <scope>${spock.scope}</scope>
         </dependency>
 
         <dependency>
@@ -242,7 +253,7 @@
             <plugin>
                 <groupId>org.codehaus.gmavenplus</groupId>
                 <artifactId>gmavenplus-plugin</artifactId>
-                <version>${gmavenplus-plugin.version}</version>
+                <version>1.12.0</version>
                 <executions>
                     <execution>
                         <goals>
