@@ -16,6 +16,8 @@ import spock.lang.Specification
  * 参考 https://groovy-lang.org/operators.html#_bitwise_operators
  * groovy 位运算必须加括号
  *
+ * 进制转换: https://www.sojson.com/hexconvert.html
+ *
  * @author moqi* @create 7/9/21 14:11
  */
 class BitwiseOperatorUnitTest extends Specification {
@@ -98,11 +100,47 @@ class BitwiseOperatorUnitTest extends Specification {
         result == (value1 >> rightShiftNumber)
 
         where:
-        value1 | rightShiftNumber | result
-        0b1100 | 0b010            | 0b011
-        014    | 02               | 03
-        12     | 2                | 3
-        0xc    | 0x2              | 0x3
+        value1  | rightShiftNumber | result
+        0b1100  | 0b010            | 0b011
+        014     | 02               | 03
+        12      | 2                | 3
+        0xc     | 0x2              | 0x3
+        -0b1100 | 0b010            | -0b011
+        -014    | 02               | -03
+        -12     | 2                | -3
+        -0xc    | 0x2              | -0x3
+    }
+
+    def "given #value1 when signed left shift operator with #rightShiftNumber then get #result"() {
+        expect:
+        result == (value1 << rightShiftNumber)
+
+        where:
+        value1  | rightShiftNumber | result
+        0b1100  | 0b010            | 0b110000
+        014     | 02               | 060
+        12      | 2                | 48
+        0xc     | 0x2              | 0x30
+        -0b1100 | 0b010            | -0b110000
+        -014    | 02               | -060
+        -12     | 2                | -48
+        -0xc    | 0x2              | -0x30
+    }
+
+    def "given #value1 when unsigned left shift operator with #rightShiftNumber then get #result"() {
+        expect:
+        result == (value1 >>> rightShiftNumber)
+
+        where:
+        value1  | rightShiftNumber | result
+        0b1100  | 0b010            | 0b011
+        014     | 02               | 03
+        12      | 2                | 3
+        0xc     | 0x2              | 0x3
+        -0b1100 | 0b010            | 0b111111111111111111111111111101
+        -014    | 02               | 07777777775
+        -12     | 2                | 1073741821
+        -0xc    | 0x2              | 0x3ffffffd
     }
 
 }
