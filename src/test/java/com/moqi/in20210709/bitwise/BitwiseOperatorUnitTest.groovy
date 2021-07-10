@@ -18,6 +18,8 @@ import spock.lang.Specification
  *
  * 进制转换: https://www.sojson.com/hexconvert.html
  *
+ * 原码反码补码: https://www.youtube.com/watch?v=9uoqPDo-yQg
+ *
  * @author moqi* @create 7/9/21 14:11
  */
 class BitwiseOperatorUnitTest extends Specification {
@@ -95,52 +97,72 @@ class BitwiseOperatorUnitTest extends Specification {
         0x6    | -0x7
     }
 
+    /**
+     * -12 >> 2 的计算
+     *
+     * -12 的原码: 10000000000000000000000000001100
+     * -12 的反码: 11111111111111111111111111110011
+     * -12 的补码: 11111111111111111111111111110101
+     * -12 的补码右移两位: 111111111111111111111111111101
+     * -12 的补码右移两位高位补一: 11111111111111111111111111111101
+     * -12 的补码右移两位高位补一总体减一成负数反码: 11111111111111111111111111111100
+     * -12 的补码右移两位高位补一总体加一成负数反码后再转为原码: 10000000000000000000000000000011
+     */
     def "given #value1 when signed right shift operator with #rightShiftNumber then get #result"() {
         expect:
         result == (value1 >> rightShiftNumber)
 
         where:
-        value1  | rightShiftNumber | result
-        0b1100  | 0b010            | 0b011
-        014     | 02               | 03
-        12      | 2                | 3
-        0xc     | 0x2              | 0x3
-        -0b1100 | 0b010            | -0b011
-        -014    | 02               | -03
-        -12     | 2                | -3
-        -0xc    | 0x2              | -0x3
+        value1                             | rightShiftNumber | result
+        0b1100                             | 0b010            | 0b011
+        014                                | 02               | 03
+        12                                 | 2                | 3
+        0xc                                | 0x2              | 0x3
+        -0b0000000000000000000000000001100 | 0b010            | -0b0000000000000000000000000000011
+        -014                               | 02               | -03
+        -12                                | 2                | -3
+        -0xc                               | 0x2              | -0x3
     }
 
-    def "given #value1 when signed left shift operator with #rightShiftNumber then get #result"() {
+    def "given #value1 when signed left shift operator with #leftShiftNumber then get #result"() {
         expect:
-        result == (value1 << rightShiftNumber)
+        result == (value1 << leftShiftNumber)
 
         where:
-        value1  | rightShiftNumber | result
-        0b1100  | 0b010            | 0b110000
-        014     | 02               | 060
-        12      | 2                | 48
-        0xc     | 0x2              | 0x30
-        -0b1100 | 0b010            | -0b110000
-        -014    | 02               | -060
-        -12     | 2                | -48
-        -0xc    | 0x2              | -0x30
+        value1  | leftShiftNumber | result
+        0b1100  | 0b010           | 0b110000
+        014     | 02              | 060
+        12      | 2               | 48
+        0xc     | 0x2             | 0x30
+        -0b1100 | 0b010           | -0b110000
+        -014    | 02              | -060
+        -12     | 2               | -48
+        -0xc    | 0x2             | -0x30
     }
 
-    def "given #value1 when unsigned left shift operator with #rightShiftNumber then get #result"() {
+    /**
+     * -12 >>> 2 的计算
+     *
+     * -12 的原码: 10000000000000000000000000001100
+     * -12 的反码: 11111111111111111111111111110011
+     * -12 的补码: 11111111111111111111111111110101
+     * -12 的补码无符号右移两位: 111111111111111111111111111101
+     * -12 的补码无符号右移两位高位补零: 00111111111111111111111111111101
+     */
+    def "given #value1 when unsigned right shift operator with #rightShiftNumber then get #result"() {
         expect:
         result == (value1 >>> rightShiftNumber)
 
         where:
-        value1  | rightShiftNumber | result
-        0b1100  | 0b010            | 0b011
-        014     | 02               | 03
-        12      | 2                | 3
-        0xc     | 0x2              | 0x3
-        -0b1100 | 0b010            | 0b111111111111111111111111111101
-        -014    | 02               | 07777777775
-        -12     | 2                | 1073741821
-        -0xc    | 0x2              | 0x3ffffffd
+        value1                              | rightShiftNumber | result
+        0b1100                              | 0b010            | 0b011
+        014                                 | 02               | 03
+        12                                  | 2                | 3
+        0xc                                 | 0x2              | 0x3
+        -0b00000000000000000000000000001100 | 0b010            | 0b00111111111111111111111111111101
+        -014                                | 02               | 07777777775
+        -12                                 | 2                | 1073741821
+        -0xc                                | 0x2              | 0x3ffffffd
     }
 
 }
