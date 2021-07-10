@@ -20,6 +20,8 @@ import spock.lang.Specification
  *
  * 原码反码补码: https://www.youtube.com/watch?v=9uoqPDo-yQg
  *
+ * 补码(wikipedia): https://zh.wikipedia.org/wiki/%E4%BA%8C%E8%A3%9C%E6%95%B8
+ *
  * @author moqi* @create 7/9/21 14:11
  */
 class BitwiseOperatorUnitTest extends Specification {
