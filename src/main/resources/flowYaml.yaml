@@ -1,0 +1,70 @@
+@startyaml
+version: 0.0.1
+namespace: weibovideo
+name: release
+service: mca
+type: flow
+tasks:
+  - category: pass
+    name: startMca
+    next: finishUpload,aiSnapshotFinish
+  - category: suspense
+    name: finishUpload
+    inputMappings:
+      - target: $.input.mediaId
+        source: $.context.mediaId
+    outputMappings:
+      - target: $.context.mediaId
+        source: $.output.mediaId
+    conditions:
+      - $.input.[?(@.mediaId)]
+    next: nima
+  - category: suspense
+    name: aiSnapshotFinish
+    inputMappings:
+      - target: $.input.aiSnapshotUrl
+        source: $.context.aiSnapshotUrl
+      - target: $.input.aiSnapshotFileInfo
+        source: $.context.aiSnapshotFileInfo
+    outputMappings:
+      - target: $.context.aiSnapshotUrl
+        source: $.output.aiSnapshotUrl
+      - target: $.context.aiSnapshotFileInfo
+        source: $.output.aiSnapshotFileInfo
+    conditions:
+      - $.input.[?(@.aiSnapshotUrl)]
+    next: nima
+  - category: function
+    name: nima
+    resourceName: weibofunction://default:common:nimaDeployUnit1:prod:nima
+    pattern: task_scheduler
+    inputMappings:
+      - target: $.input.mediaId
+        source: $.context.mediaId
+      - target: $.input.imageUrl
+        source: $.context.aiSnapshotUrl
+      - target: $.input.fileInfo
+        source: $.context.aiSnapshotFileInfo
+      - target: $.input.weight
+        source: 400
+    outputMappings:
+      - target: $.context.nima
+        source: $.output.data
+    next: saveNima
+  - category: function
+    name: saveNima
+    resourceName: weibofunction://default:common:mcaFunctionServiceDeployUnit1:prod:mcaFunctionService
+    pattern: task_scheduler
+    inputMappings:
+      - target: $.input.event
+        source: saveAnalysisResult
+      - target: $.input.info
+        source: $.context.nima
+      - target: $.input.mediaId
+        source: $.context.mediaId
+      - target: $.input.weight
+        source: 40
+    next: finishMca
+  - category: pass
+    name: finishMca
+@endyaml
