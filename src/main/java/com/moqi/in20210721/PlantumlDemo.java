@@ -13,7 +13,14 @@ import java.io.IOException;
 public class PlantumlDemo {
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        Run.main(new String[]{"-tsvg", "src/main/resources/flowYaml.yaml"});
+        Run.main(new String[]{
+                "-nometadata",
+                // "-version",
+                // "-verbose",
+                // "-language",
+                // "-overwrite",
+                "-tsvg",
+                "src/main/resources/flowYaml.yaml"});
     }
 
 }
