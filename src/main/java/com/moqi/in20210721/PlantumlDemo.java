@@ -3,6 +3,9 @@ package com.moqi.in20210721;
 import net.sourceforge.plantuml.Run;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
  * 练习 Plantuml
@@ -18,9 +21,17 @@ public class PlantumlDemo {
                 // "-version",
                 // "-verbose",
                 // "-language",
-                // "-overwrite",
+                // "-pipe",
                 "-tsvg",
-                "src/main/resources/flowYaml.yaml"});
+                // readFile("src/main/resources/flowYaml.yaml", Charset.defaultCharset())
+                "src/main/resources/flowYaml.yaml"
+        });
+    }
+
+    private static String readFile(String path, Charset encoding)
+            throws IOException {
+        byte[] encoded = Files.readAllBytes(Paths.get(path));
+        return new String(encoded, encoding);
     }
 
 }
